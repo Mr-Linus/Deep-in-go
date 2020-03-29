@@ -128,9 +128,9 @@ func (l *List) PushBack(v interface{}) *Element {
 
 这里还会使用 lazyInit 来判断链表有没有被初始化过，如果没有就立即初始化。
 
-- Move 操作
+其他设计的插入操作也大多殊途同归，都是对 `insertValue`  方法的封装。
 
-其他设计的插入操作也大多殊途同归，都是对 `insertValue`  方法的封装，这里我们就简单看一个例子。
+- Move 操作
 
 ```go
 func (l *List) MoveAfter(e, mark *Element) {
