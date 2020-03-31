@@ -6,4 +6,5 @@
         * [单链表](data_structure/s_list.md)
         * [双向链表](data_structure/d_list.md)
         * [循环链表](data_structure/ring.md)
+    * [排序](data_structure/sort.md)
 * [Go 运行时](part2/README.md)
