@@ -6,7 +6,6 @@
         * [单链表](data_structure/list/s_list.md)
         * [双向链表](data_structure/list/d_list.md)
         * [循环链表](data_structure/list/ring.md)
-        * [链表的应用]
-            *[LFU 缓存](data_structure/list/lfu.md)
+        * [链表的应用——LFU 缓存](data_structure/list/lfu.md)
     * [排序](data_structure/sort.md)
 * [Go 运行时](part2/README.md)
