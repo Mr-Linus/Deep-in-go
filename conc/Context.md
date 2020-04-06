@@ -1,4 +1,4 @@
-## Go Context
+## Context
 
 在使用WaitGroup值的时候，我们最好用“先统一Add，再并发Done，最后Wait”的标准模式来构建协作流程。
 

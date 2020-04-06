@@ -1,8 +1,6 @@
-## Go 协同
+## Sync WaitGroup
 
 sync包的WaitGroup类型。它比通道更加适合实现这种一对多的 goroutine 协作流程。
-
-### sync包的WaitGroup类型
 
 sync.WaitGroup类型（以下简称WaitGroup类型）是开箱即用的，也是并发安全的。它一旦被真正使用就不能被复制了。WaitGroup类型拥有三个指针方法：Add、Done和Wait。你可以想象该类型中有一个计数器，它的默认值是0。我们可以通过调用该类型值的Add方法来增加，或者减少这个计数器的值。
 
