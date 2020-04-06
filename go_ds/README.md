@@ -1,1 +1,1 @@
-本章主要介绍的是Go 语言的数据结构特性，常见的数据结构，比如channel、slice、map等。
+本章主要介绍的是Go 语言的数据结构及其特性，比如struct、slice、map等。
