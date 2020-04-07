@@ -16,6 +16,7 @@
         * [双向链表](data_structure/list/d_list.md)
         * [循环链表](data_structure/list/ring.md)
         * [链表的常见操作](data_structure/list/ops.md)
+        * [链表的应用（进阶）——LRU 缓存](data_structure/list/lru.md)
         * [链表的应用（高级）——LFU 缓存](data_structure/list/lfu.md)
     * [排序](data_structure/sort.md)
 * [Go 并发](conc/README.md)
