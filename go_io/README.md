@@ -1,4 +1,4 @@
-### 番外篇：io 包中的接口和工具
+### io 包中的接口和工具
 
 strings.Builder类型主要用于构建字符串，它的指针类型实现的接口有io.Writer、io.ByteWriter和fmt.Stringer。
 

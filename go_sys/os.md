@@ -1,4 +1,4 @@
-## Go OS API
+## OS API
 
 - ### os.File
 

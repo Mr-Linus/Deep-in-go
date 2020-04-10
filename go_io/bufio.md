@@ -1,4 +1,4 @@
-## 番外篇：Go bufio 
+## bufio 
 
 bufio是“buffered I/O”的缩写。顾名思义，这个代码包中的程序实体实现的 I/O 操作都内置了缓冲区。
 
