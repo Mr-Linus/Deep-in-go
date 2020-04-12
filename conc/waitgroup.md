@@ -1,4 +1,4 @@
-## Sync WaitGroup
+## sync.WaitGroup
 
 sync包的WaitGroup类型。它比通道更加适合实现这种一对多的 goroutine 协作流程。
 
