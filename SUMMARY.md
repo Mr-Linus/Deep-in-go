@@ -14,6 +14,7 @@
     * [错误](go_ds/Error.md)
     * [Panic Recover Defer](go_ds/panic-recover-defer.md)
 * [Go 实现通用数据结构](data_structure/README.md)
+    * [复杂度分析](data_structure/list/ca.md)
     * [链表](data_structure/list/list.md)
         * [单链表](data_structure/list/s_list.md)
         * [双向链表](data_structure/list/d_list.md)
