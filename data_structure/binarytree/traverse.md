@@ -1,8 +1,42 @@
 ## 二叉树遍历
 
-// TODO:
+在二叉树的遍历过程中，除了其实递归，也可以通过迭代（栈、队列）实现。
 
-先序遍历
+这里我们首先看下用go 语言实现的栈长什么样子：
+
+```go
+type Stack struct {
+	inter []*TreeNode
+}
+
+func (s *Stack)Push(x *TreeNode){
+	s.inter = append(s.inter,x)
+}
+
+func (s *Stack)Len()int{
+	return len(s.inter)
+}
+
+func (s *Stack)Pop() (*TreeNode,bool){
+	if len(s.inter) == 0{
+		return nil,false
+	}
+	key := s.inter[len(s.inter)-1]
+	if len(s.inter) == 1{
+		s.inter = []*TreeNode{}
+	}else{
+		s.inter = s.inter[:len(s.inter)-1]
+
+	}
+	return key,true
+}
+```
+
+
+
+
+
+- 先序遍历
 
 递归：
 
@@ -75,31 +109,6 @@ type TreeNode struct {
 	     Right *TreeNode
 }
 
-type Stack struct {
-	inter []*TreeNode
-}
-
-func (s *Stack)Push(x *TreeNode){
-	s.inter = append(s.inter,x)
-}
-
-func (s *Stack)Len()int{
-	return len(s.inter)
-}
-
-func (s *Stack)Pop() (*TreeNode,bool){
-	if len(s.inter) == 0{
-		return nil,false
-	}
-	key := s.inter[len(s.inter)-1]
-	if len(s.inter) == 1{
-		s.inter = []*TreeNode{}
-	}else{
-		s.inter = s.inter[:len(s.inter)-1]
-
-	}
-	return key,true
-}
 
 func inorderTraversal(root *TreeNode) []int {
 	if root == nil {
