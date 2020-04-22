@@ -52,9 +52,9 @@ func growslice(et *_type, old slice, cap int) slice {
 }
 ```
 
-2. 根据扩容大小和切片类型，确定不同的内存分配大小，同时保证内存的对齐。因此，申请的内存可能会大于实际的`et.size * newcap`
+2. 根据扩容大小和切片类型，确定不同的内存分配大小，同时保证内存的对齐。因此，申请的内存可能会大于实际的 `et.size * newcap`
 
-   ```go
+```go
    	var overflow bool
    	var lenmem, newlenmem, capmem uintptr
    	// Specialize for common values of et.size.
@@ -75,14 +75,15 @@ func growslice(et *_type, old slice, cap int) slice {
    		capmem, overflow = math.MulUintptr(et.size, uintptr(newcap))
    		capmem = roundupsize(capmem)
    		newcap = int(capmem / et.size)
-   	}
-   ```
+	}
 
-   
+```
+
 
 3. 最后核心是申请内存。要注意的是，新的切片不一定意味着新的地址。
 
-   ```go
+```go
+
    	if overflow || capmem > maxAlloc {
    		panic(errorString("growslice: cap out of range"))
    	}
@@ -105,10 +106,10 @@ func growslice(et *_type, old slice, cap int) slice {
    	// 高效拷贝字节指令，from old.array to p
    	memmove(p, old.array, lenmem)
    
-   	return slice{p, old.len, newcap}
-   ```
+	return slice{p, old.len, newcap}
 
-   
+```
+
 
 #### 切片复制
 
@@ -119,7 +120,9 @@ func growslice(et *_type, old slice, cap int) slice {
   2. 注意到只是拷贝了指针而已, 所以是浅拷贝
 
 ```go
+
   shallowCopy := data[:1] // 默认的浅拷贝方式，Go直接汇编操作没有源码
+
 ```
 
 - 深拷贝
@@ -130,22 +133,22 @@ func growslice(et *_type, old slice, cap int) slice {
 
   3. 遍历内存，去复制每个元素
 
-  ```go
+```go
+
   func slicecopy(to, fm slice, width uintptr) int {  if fm.len == 0 || to.len == 0 {    return 0
     }
   
     n := fm.len
     if to.len < n {
       n = to.len
-    }    
-                                                  
+    }
     // 元素大小为0，则直接返回
-    if width == 0 {    
+    if width == 0 {
         return n
-    }    
+    }
     // 静态分析和内存扫描
     // 直接内存拷贝
-    size := uintptr(n) * width    
+    size := uintptr(n) * width
     if size == 1 { // common case worth about 2x to do here
       *(*byte)(to.array) = *(*byte)(fm.array) // known to be a byte pointer
     } else {
@@ -155,7 +158,7 @@ func growslice(et *_type, old slice, cap int) slice {
   
   // 针对字符串slice的拷贝
   func slicestringcopy(to []byte, fm string) int {  
-      if len(fm) == 0 || len(to) == 0 {    
+      if len(fm) == 0 || len(to) == 0 {
           return 0
     	}
   
@@ -168,5 +171,5 @@ func growslice(et *_type, old slice, cap int) slice {
    	memmove(unsafe.Pointer(&to[0]), stringStructOf(&fm).str, uintptr(n))  
       return n
   }
-  ```
+```
 
