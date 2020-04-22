@@ -40,6 +40,5 @@
 * [Go 系统调用](go_sys/README.md)
     * [OS API](go_sys/os.md)
     * [Socket & IPC](go_sys/socket.md)
-
-
-
+* [Go 源码分析](go_source/README.md)
+    * [切片](go_source/slice.md)
