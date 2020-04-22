@@ -18,7 +18,7 @@ type slice struct {
 
 #### 2.切片扩容
 
-当Go 中切片append当容量超过了现有容量，就需要进行扩容
+当 Go 中切片 append 当容量超过了现有容量，就需要进行扩容
 
 1. 确定扩容的大小
 
@@ -115,7 +115,7 @@ func growslice(et *_type, old slice, cap int) slice {
 
 - 浅拷贝 
 
-  1. 先将 data 的成员数据拷贝到寄存器，然后从寄存器拷贝到shallowCopy的对象中。
+  1. 先将 data 的成员数据拷贝到寄存器，然后从寄存器拷贝到 shallowCopy 的对象中。
 
   2. 注意到只是拷贝了指针而已, 所以是浅拷贝
 
@@ -172,4 +172,3 @@ func growslice(et *_type, old slice, cap int) slice {
       return n
   }
 ```
-
