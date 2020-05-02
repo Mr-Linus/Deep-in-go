@@ -29,22 +29,22 @@ func (ac AnimalCategory) String() string {
 }
 ```
 
-这里，有个名叫String的方法，从它的接收者声明可以看出它隶属于AnimalCategory类型。
+这里，有个名叫 String 的方法，从它的接收者声明可以看出它隶属于 AnimalCategory 类型。
 
-通过该方法的接收者名称ac，我们可以在其中引用到当前值的任何一个字段，或者调用到当前值的任何一个方法（也包括String方法自己）。
+通过该方法的接收者名称 ac，我们可以在其中引用到当前值的任何一个字段，或者调用到当前值的任何一个方法（也包括String方法自己）。
 
-String方法的功能是提供当前值的字符串表示形式，其中的各个等级分类会按照从大到小的顺序排列。我们可以用如下方式使用：
+String 方法的功能是提供当前值的字符串表示形式，其中的各个等级分类会按照从大到小的顺序排列。我们可以用如下方式使用：
 
 ```go
 category := AnimalCategory{species: "cat"}
 fmt.Printf("The animal category: %s\n", category)
 ```
 
-这里，字面量初始化了一个AnimalCategory类型的值，并把它赋给了变量category。为了不喧宾夺主，我只为其中的species字段指定了字符串值"cat"，该字段代表最末级分类“种”。
+这里，字面量初始化了一个 AnimalCategory 类型的值，并把它赋给了变量 category。为了不喧宾夺主，我只为其中的species 字段指定了字符串值"cat"，该字段代表最末级分类“种”。
 
 在 Go 语言中，我们可以通过为一个类型编写名为 String 的方法，来自定义该类型的字符串表示形式。**这个 String 方法不需要任何参数声明，但需要有一个 string 类型的结果声明。**
 
-因此，在调用fmt.Printf函数时，使用占位符%s和category值本身就可以打印出后者的字符串表示形式，而无需显式地调用它的String方法，fmt.Printf函数会自己去寻找它。此时的打印内容会是The animal category: cat。显而易见，category的String方法成功地引用了当前值的所有字段。
+因此，在调用 fmt.Printf 函数时，使用占位符 %s 和 category 值本身就可以打印出后者的字符串表示形式，而无需显式地调用它的 String 方法，fmt.Printf 函数会自己去寻找它。此时的打印内容会是 The animal category: cat。显而易见，category 的 String 方法成功地引用了当前值的所有字段。
 
 方法隶属的类型其实并不局限于结构体类型，但**必须是某个自定义的数据类型**，**并且不能是任何接口类型**。**一个数据类型关联的所有方法，共同组成了该类型的方法集合**。**同一个方法集合中的方法不能出现重名。**并且，如果它们所属的是**一个结构体类型，那么它们的名称与该类型中任何字段的名称也不能重复**。**我们可以把结构体类型中的一个字段看作是它的一个属性或者一项数据，再把隶属于它的一个方法看作是附加在其中数据之上的一个能力或者一项操作**。将属性及其能力（或者说数据及其操作）封装在一起，是面向对象编程（object-oriented programming）的一个主要原则。**Go 语言摄取了面向对象编程中的很多优秀特性，同时也推荐这种封装的做法。**从这方面看，**Go 语言其实是支持面向对象编程的，但它选择摒弃了一些在实际运用过程中容易引起程序开发者困惑的特性和规则。**
 
@@ -57,11 +57,10 @@ type Animal struct {
 }
 ```
 
-字段声明AnimalCategory代表了Animal类型的一个**嵌入字段**。
+字段声明 AnimalCategory 代表了 Animal 类型的一个**嵌入字段**。
 
 Go 语言规范规定，如果一个字段的声明中只有字段的类型名而没有字段的名称，那么它就是一个嵌入字段，也可以被称为**匿名字段**。可以通过此类型变量的名称后跟“.”，再后跟嵌入字段类型的方式引用到该字段。也就是说，嵌入字段的类型既是类型也是名称。
 
-**Case:**
 
 ```go
 func (a Animal) Category() string {
@@ -69,7 +68,7 @@ func (a Animal) Category() string {
 }
 ```
 
-Category方法的接收者类型是Animal，接收者名称是a。在该方法中，我通过表达式a.AnimalCategory选择到了a的这个嵌入字段，然后又选择了该字段的String方法并调用了它。
+Category 方法的接收者类型是 Animal，接收者名称是 a。在该方法中，我通过表达式 a.AnimalCategory 选择到了 a 的这个嵌入字段，然后又选择了该字段的 String 方法并调用了它。
 
 在某个代表变量的标识符的右边加“.”，再加上字段名或方法名的表达式被称为选择表达式，它用来表示选择了该变量的某个字段或者方法。
 
@@ -83,17 +82,17 @@ animal := Animal{
 fmt.Printf("The animal: %s\n", animal)
 ```
 
-我声明了一个Animal类型的变量animal并对它进行初始化。我把字符串值"American Shorthair"赋给它的字段scientificName，并把前面声明过的变量category赋给它的嵌入字段AnimalCategory。
+我声明了一个 Animal 类型的变量 animal 并对它进行初始化。我把字符串值 "American Shorthair" 赋给它的字段scientificName，并把前面声明过的变量 category 赋给它的嵌入字段 AnimalCategory。
 
-在后面使用 fmt.Printf 函数和%s占位符试图打印animal的字符串表示形式，相当于调用animal的String方法。虽然我们还没有为Animal类型编写String方法，但这样做是没问题的。因为在这里，**嵌入字段AnimalCategory的String方法会被当做animal的方法调用**。
+在后面使用 fmt.Printf 函数和%s占位符试图打印 animal 的字符串表示形式，相当于调用 animal 的 String 方法。虽然我们还没有为 Animal 类型编写 String 方法，但这样做是没问题的。因为在这里，**嵌入字段 AnimalCategory 的 String 方法会被当做 animal 的方法调用**。
 
-如果也为Animal类型编写一个String方法，嵌入字段AnimalCategory的String方法将会被“屏蔽”，animal的String方法会被调用。
+如果也为Animal类型编写一个 String 方法，嵌入字段 AnimalCategory 的 String 方法将会被“屏蔽”，animal 的String 方法会被调用。
 
 由于我们同样可以像访问被嵌入类型的字段那样，直接访问嵌入字段的字段，所以如果这两个结构体类型里存在同名的字段，那么嵌入字段中的那个字段一定会被“屏蔽”。这与我们在前面讲过的，可重名变量之间可能存在的“屏蔽”现象很相似。
 
 嵌入字段的字段和方法都可以“嫁接”到被嵌入类型上，所以即使在两个同名的成员一个是字段，另一个是方法的情况下，这种“屏蔽”现象依然会存在。
 
-即使被屏蔽了，我们仍然可以通过链式的选择表达式，选择到嵌入字段的字段或方法，就像我在Category方法中所做的那样。这种“屏蔽”其实还带来了一些好处。我们看看下面这个Animal类型的String方法的实现：
+即使被屏蔽了，我们仍然可以通过链式的选择表达式，选择到嵌入字段的字段或方法，就像我在 Category 方法中所做的那样。这种“屏蔽”其实还带来了一些好处。我们看看下面这个 Animal 类型的 String 方法的实现：
 
 ```go
 func (a Animal) String() string {
@@ -102,7 +101,7 @@ func (a Animal) String() string {
 }
 ```
 
-在这里，把对嵌入字段的String方法的调用结果融入到了Animal类型的同名方法的结果中。这种将同名方法的结果逐层“包装”的手法是很常见和有用的，也算是一种惯用法了。
+在这里，把对嵌入字段的 String 方法的调用结果融入到了 Animal 类型的同名方法的结果中。这种将同名方法的结果逐层“包装”的手法是很常见和有用的，也算是一种惯用法了。
 
 ![471b42767d0c82af8acd22c13dfd33b2](https://static001.geekbang.org/resource/image/47/b2/471b42767d0c82af8acd22c13dfd33b2.png)
 
@@ -120,17 +119,15 @@ func (cat Cat) String() string {
 }
 ```
 
-结构体类型Cat中有一个嵌入字段Animal，而Animal类型还有一个嵌入字段AnimalCategory。
+结构体类型 Cat 中有一个嵌入字段 Animal ，而 Animal 类型还有一个嵌入字段 AnimalCategory。
 
-当我们调用Cat类型值的String方法时，如果该类型确有String方法，那么嵌入字段Animal和AnimalCategory的String方法都会被“屏蔽”。
+当我们调用 Cat 类型值的 String 方法时，如果该类型确有 String 方法，那么嵌入字段 Animal 和 AnimalCategory 的String 方法都会被“屏蔽”。
 
-如果该类型没有String方法，那么嵌入字段Animal的String方法会被调用，而它的嵌入字段AnimalCategory的String方法仍然会被屏蔽。
+如果该类型没有 String 方法，那么嵌入字段 Animal 的 String 方法会被调用，而它的嵌入字段 AnimalCategory 的String 方法仍然会被屏蔽。
 
-只有当Cat类型和Animal类型都没有String方法的时候，AnimalCategory的String方法菜会被调用。
+只有当 Cat 类型和 Animal 类型都没有 String 方法的时候，AnimalCategory 的 String 方法菜会被调用。
 
 如果处于同一个层级的多个嵌入字段拥有同名的字段或方法，那么从被嵌入类型的值那里，选择此名称的时候就会引发一个编译错误，**因为编译器无法确定被选择的成员到底是哪一个。**
-
-
 
 ### 值方法和指针方法
 
@@ -142,11 +139,11 @@ func (cat *Cat) SetName(name string) {
 }
 ```
 
-方法SetName的接收者类型是*Cat。Cat左边再加个*代表的就是Cat类型的指针类型。
+方法 SetName 的接收者类型是\*Cat。Cat 左边再加个\*代表的就是Cat类型的指针类型。
 
-Cat可以被叫做*Cat的基本类型。可以认为这种指针类型的值表示的是指向某个基本类型值的指针。
+Cat可以被叫做\*Cat的基本类型。可以认为这种指针类型的值表示的是指向某个基本类型值的指针。
 
-我们可以通过把取值操作符*放在这样一个指针值的左边来组成一个取值表达式，以获取该指针值指向的基本类型值，也可以通过把取址操作符&放在一个可寻址的基本类型值的左边来组成一个取址表达式，以获取该基本类型值的指针值。
+我们可以通过把取值操作符 \*放在这样一个指针值的左边来组成一个取值表达式，以获取该指针值指向的基本类型值，也可以通过把取址操作符 & 放在一个可寻址的基本类型值的左边来组成一个取址表达式，以获取该基本类型值的指针值。
 
 所谓的指针方法，就是接收者类型是上述指针类型的方法。
 
@@ -158,8 +155,7 @@ Cat可以被叫做*Cat的基本类型。可以认为这种指针类型的值表�
 
 - 一个类型的方法集合中有哪些方法与**它能实现哪些接口类型是息息相关的**。**如果一个基本类型和它的指针类型的方法集合是不同的**，**那么它们具体实现的接口类型的数量就也会有差异，除非这两个数量都是零。**比如，一个指针类型实现了某某接口类型，但它的基本类型却不一定能够作为该接口的实现类型。**(划重点！！！！)**
 
-
-> 严格来讲，我们在这样的基本类型的值上只能调用到它的值方法。但是，Go 语言会适时地为我们进行自动地转译，使得我们在这样的值上也能调用到它的指针方法。比如，在Cat类型的变量cat之上，之所以我们可以通过cat.SetName("monster")修改猫的名字，是因为 Go 语言把它自动转译为了(&cat).SetName("monster")，即：**先取cat的指针值，然后在该指针值上调用SetName方法。**
+> 严格来讲，我们在这样的基本类型的值上只能调用到它的值方法。但是，Go 语言会适时地为我们进行自动地转译，使得我们在这样的值上也能调用到它的指针方法。比如，在 Cat 类型的变量 cat 之上，之所以我们可以通过 cat.SetName("monster") 修改猫的名字，是因为 Go 语言把它自动转译为了(&cat).SetName("monster")，即：**先取cat的指针值，然后在该指针值上调用SetName方法。**
 
 ### 拓展
 
