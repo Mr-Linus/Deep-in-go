@@ -3,6 +3,7 @@
 * [介绍](README.md)
 * [Go 语言数据结构](go_ds/README.md)
     * [程序实体](go_ds/program.md)
+    * [命令 & 程序入口](go_ds/command.md)
     * [库](go_ds/package.md)
     * [数组和切片](go_ds/array.md)
     * [Map](go_ds/map.md)
@@ -42,3 +43,5 @@
     * [Socket & IPC](go_sys/socket.md)
 * [Go 源码分析](go_source/README.md)
     * [切片](go_source/slice.md)
+* [Go Test](go_source/test.md)
+* [Go FAQ](go_source/faq.md)
