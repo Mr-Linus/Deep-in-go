@@ -1,6 +1,6 @@
 ## panic recover defer
 
-- ### panic 
+### panic
 
 一种在我们意料之外的程序异常，它处理的不是错误，这种程序异常被叫做 panic，我把它翻译为运行时恐慌。其中的“恐慌”二字是由 panic 直译过来的，而之所以前面又加上了“运行时”三个字，是因为这种异常只会在程序运行的时候被抛出来。
 
@@ -20,12 +20,9 @@ exit status 2
 ```
 
 
+这份详情的第一行是 “panic: runtime error: index out of range”。其中的 “runtime error” 的含义是，这是一个runtime 代码包中抛出的 panic。在这个 panic 中，包含了一个 runtime.Error 接口类型的值。runtime.Error 接口内嵌了 error 接口，并做了一点点扩展，runtime 包中有不少它的实现类型。
 
-这份详情的第一行是“panic: runtime error: index out of range”。其中的“runtime error”的含义是，这是一个runtime代码包中抛出的 panic。在这个 panic 中，包含了一个runtime.Error接口类型的值。runtime.Error接口内嵌了error接口，并做了一点点扩展，runtime包中有不少它的实现类型。
-
-
-
-实际上，此详情中的“panic：”右边的内容，**正是这个 panic 包含的runtime.Error类型值的字符串表示形式**。
+实际上，此详情中的 “panic：” 右边的内容，**正是这个 panic 包含的runtime.Error类型值的字符串表示形式**。
 
 panic 详情中，一般还会包含与它的引发原因有关的 goroutine 的代码执行信息。正如前述详情中的“goroutine 1 [running]”，它表示有一个 ID 为1的 goroutine 在此 panic 被引发的时候正在运行。这里的 ID 其实并不重要，因为它只是 Go 语言运行时系统内部给予的一个 goroutine 编号，我们在程序中是无法获取和更改的。
 
@@ -54,8 +51,6 @@ panic 可能是我们在无意间（或者说一不小心）引发的，如前�
 panic 详情会在控制权传播的过程中，被逐渐地积累和完善，并且，控制权会一级一级地沿着调用栈的反方向传播至顶端。
 
 在针对某个 goroutine 的代码执行信息中，调用栈底端的信息会先出现，然后是上一级调用的信息，以此类推，最后才是此调用栈顶端的信息。
-
-#### Usecase
 
 ```go
 package main
@@ -106,11 +101,7 @@ main函数调用了caller1函数，而caller1函数又调用了caller2函数，�
 
 ![606ff433a6b58510f215e57792822bd7](https://static001.geekbang.org/resource/image/60/d7/606ff433a6b58510f215e57792822bd7.png)
 
-
-
 如果一个 panic 是我们在无意间引发的，那么其中的值只能由 Go 语言运行时系统给定。但是，当我们使用panic函数有意地引发一个 panic 的时候，却可以自行指定其包含的值。
-
-
 
 在调用panic函数时，把某个值作为参数传给该函数就可以了。由于panic函数的唯一一个参数是空接口（也就是interface{}）类型的，所以从语法上讲，它可以接受任何类型的值。但是，我们最好传入error类型的错误值，或者其他的可以被有效序列化的值。这里的“有效序列化”指的是，可以更易读地去表示形式转换。
 
@@ -128,7 +119,7 @@ main函数调用了caller1函数，而caller1函数又调用了caller2函数，�
 
 传给panic函数的参数值，至少在程序崩溃的时候，panic 包含的那个值字符串表示形式会被打印出来。我们还可以施加某种保护措施，避免程序的崩溃。这个时候，panic 包含的值会被取出，而在取出之后，它一般都会被打印出来或者记录到日志里。
 
-- ### recover & defer
+### recover & defer
 
 Go 语言的内建函数recover专用于恢复 panic，或者说平息运行时恐慌。recover函数无需任何参数，并且会返回一个空接口类型的值。
 
@@ -164,7 +155,6 @@ func main() {
 
 无论函数结束执行的原因是什么，其中的defer函数调用都会在它即将结束执行的那一刻执行。即使导致它执行结束的原因是一个 panic 也会是这样。正因为如此，我们需要联用defer语句和recover函数调用，才能够恢复一个已经发生的 panic。
 
-#### usecase
 
 ```go
 package main

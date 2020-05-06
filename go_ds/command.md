@@ -26,7 +26,7 @@ func main() {
 
 ### 命令源码文件接收参数
 
-- #### flag 包
+#### flag 包
 
 可以在 命名源码文件中加入 init 函数，并在 init 函数中添加 flag.StringVar：
 
@@ -82,8 +82,6 @@ func main() {
 }
 ```
 
-
-
 运行该命令源码文件:
 
 ```shell
@@ -105,8 +103,6 @@ exit status 2
 
 其中，`/var/folders/ts/7lg_tl_x2gd_k1lm5g_48c7w0000gn/T/go-build155438482/b001/exe/main` 是 `go run` 命令构建上述命令源码再运行生成的可执行文件。
 
-
-
 ### 自定义命令源码文件的参数使用说明
 
 这有很多种方式，最简单的一种方式就是对变量 flag.Usage 重新赋值。flag.Usage 的类型是 func()，即一种无参数声明且无结果声明的函数类型。
@@ -118,8 +114,6 @@ flag.Usage 变量在声明时就已经被赋值了，所以我们才能够在运
 > Tips:
 >
 > 对flag.Usage的赋值必须在调用flag.Parse函数之前。
-
-
 
 ```go
 package main
@@ -199,7 +193,7 @@ exit status 2
 
 - flag.PanicOnError与之的区别是在最后抛出“运行时恐慌（panic）”。“运行时恐慌”是 Go 程序错误处理方面的概念。
 
-##### 另一种方式
+#### 另一种方式
 
 ```go
 package main
